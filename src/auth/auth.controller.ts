@@ -1,19 +1,28 @@
-import { Controller, Get, Post } from "@nestjs/common";
+import { Body, Controller, Get, ParseIntPipe, Post } from "@nestjs/common";
 import { AuthService } from "./auth.service";
+import { AuthDto } from "./dto";
 
 @Controller('auth')
-export class AuthController{
-constructor(private readonly authService:AuthService){
+export class AuthController {
+    constructor(private readonly authService: AuthService) {
 
-}
+    }
 
-@Post('signUp')
-signUp(){
-    return "Im signing up"
-}
-@Post('signIn')
-signIn(){
-return "Im signing in"
-}
+    @Post('signUp')
+    //dto means data transmission object which is a nest object that helps us in terms of validating data in body
+    signUp(
+    @Body('email') email: string,
+    //ParseIntPipe converts it to a number
+    @Body('password',ParseIntPipe) password: string,
+    dto: AuthDto) {
+        //would print the body
+        console.log(dto);
+
+        return this.authService.signUp()
+    }
+    @Post('signIn')
+    signIn() {
+        return this.authService.signIn()
+    }
 
 }

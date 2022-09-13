@@ -7,7 +7,7 @@ import { BookmarkModule } from './bookmark/bookmark.module';
 import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
-  imports: [UserModule, AuthModule, BookmarkModule, PrismaModule],
+  imports: [BookmarkModule,UserModule,AuthModule,PrismaModule,UserModule, AuthModule, BookmarkModule, PrismaModule],
   controllers: [AppController],
   providers: [AppService],
 })

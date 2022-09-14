@@ -5,9 +5,18 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { BookmarkModule } from './bookmark/bookmark.module';
 import { PrismaModule } from './prisma/prisma.module';
-
+// import{ConfigMOdule} from '@nestjs/config';
 @Module({
-  imports: [BookmarkModule,UserModule,AuthModule,PrismaModule,UserModule, AuthModule, BookmarkModule, PrismaModule],
+  imports: [
+    BookmarkModule,
+    UserModule,
+    AuthModule,
+    PrismaModule,
+    UserModule,
+    AuthModule,
+    BookmarkModule,
+    PrismaModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

@@ -3,11 +3,34 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { AuthDto } from './dto';
 import * as argon from 'argon2';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
+
 @Injectable({})
 export class AuthService {
   constructor(private prisma: PrismaService) {}
-  signIn() {
-    return { msg: 'this is the sign in' };
+
+  async signIn(dto: AuthDto) {
+    console.log('got this', dto.email);
+
+    //find user by email
+    const possibleUser = await this.prisma.user.findUnique({
+      where: {
+        email: dto.email,
+      },
+    });
+    //if user doesnt exist throw an exception
+    if (!possibleUser)
+      throw new ForbiddenException('incorrect email or password');
+    //compare password
+    //! using argon2 the parameters required are
+    //1)the hashed password
+    //2)the password in plain text from dto
+    const pwMatch = await argon.verify(possibleUser.hash, dto.password);
+    //incorrect password and throw exception
+    if (!pwMatch) throw new ForbiddenException('incorrect email or password');
+    //all good send user
+    delete possibleUser.hash;
+    const verifiedUser = possibleUser;
+    return verifiedUser;
   }
   //async function since we will use prisma in creating a user
   async signUp(dto: AuthDto) {

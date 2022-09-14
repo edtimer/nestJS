@@ -6,7 +6,7 @@ import { AuthDto } from './dto';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('signUp')
+  @Post('signup')
   //dto means data transmission object which is a nest object that helps us in terms of validating data in body
   signUp(
     //ParseIntPipe converts it to a number
@@ -18,7 +18,7 @@ export class AuthController {
 
     return this.authService.signUp();
   }
-  @Post('signIn')
+  @Post('signin')
   signIn() {
     return this.authService.signIn();
   }

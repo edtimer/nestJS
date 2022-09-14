@@ -19,6 +19,7 @@ export class AuthService {
         hash: hash,
       },
     });
+    delete user.hash;
 
     //return the user
     return user;

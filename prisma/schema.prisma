@@ -8,7 +8,6 @@ generator client {
 datasource db {
   //docker-compose up -d dev-db
   provider = "postgresql"
-  //todo fix the env not getting DATABASE_URL vaiable from .env file
   url      = env("DATABASE_URL")
   //url      = "postgresql://postgres:441422@localhost:5434/nestdb?schema=public"
 }
@@ -18,11 +17,14 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  email String
+  email String @unique
   hash  String
 
   firstName String?
   lastName  String?
+  bookmarks Bookmark[]
+
+  @@map("users")
 }
 
 model Bookmark {
@@ -33,4 +35,8 @@ model Bookmark {
   title       String
   description String?
   link        String
+  userId      Int
+  user        User    @relation(fields: [userId], references: [id])
+
+  @@map("bookmarks")
 }

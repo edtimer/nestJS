@@ -5,7 +5,14 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 
 @Injectable()
 //default strategy is jwt , if using a different strategy specify here
-export class JwtStrategy extends PassportStrategy(Strategy) {
+export class JwtStrategy extends PassportStrategy(
+  Strategy,
+  /*can specify the strategy here
+  'jwt2'
+  'facebook'
+'some strategy'
+  */
+) {
   constructor(private config: ConfigService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),

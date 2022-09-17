@@ -11,7 +11,9 @@ export class UserController {
   @UseGuards(JwtGuard)
   @Get('profile')
   //the following method uses a custom decorator that returns a prism user
-  getUserInfo(@GetUser() user: User) {
+  getUserInfo(@GetUser() user: User, @GetUser('email') email: string) {
+    console.log('the email:', email);
+
     //    return req.user;
     return user;
 

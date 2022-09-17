@@ -3,16 +3,17 @@ import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
 import { UserService } from './user.service';
 import { JwtGuard } from 'src/auth/guard';
+import { GetUser } from 'src/auth/decorators';
+import { User } from '@prisma/client';
 @Controller('user')
 export class UserController {
   //in paranthesis we specify what is it guarding for, in this case jwt
   @UseGuards(JwtGuard)
   @Get('profile')
-  getUserInfo(@Req() req: Request) {
-    console.log('the request here', req.user);
-
+  //the following method uses a custom decorator that returns a prism user
+  getUserInfo(@GetUser() user: User) {
     //    return req.user;
-    return 'user info here';
+    return user;
 
     return {
       // current_user: this.userService.getCurrentUser(payload.userId)

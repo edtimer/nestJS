@@ -32,6 +32,8 @@ export class JwtStrategy extends PassportStrategy(
         },
       });
       console.log('validated this user', { user: user });
+      //deleting user hash before returning request
+      delete user.hash;
       return user;
     } catch {
       return null;

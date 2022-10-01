@@ -18,4 +18,13 @@ export class UserController {
       // current_user: this.userService.getCurrentUser(payload.userId)
     };
   }
+  @Get('users')
+  async getAllUsers(): Promise<any> {
+    const res = await fetch('https://jsonplaceholder.typicode.com/users');
+    const staff = await res.json();
+    console.log(staff);
+
+    //    return req.user;
+    return staff;
+  }
 }
